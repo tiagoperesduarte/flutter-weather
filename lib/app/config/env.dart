@@ -1,17 +1,14 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 class Env {
   static Map<String, String> _values;
-  static bool _alreadyLoaded = false;
-
-  static bool isProduction() {
-    return bool.fromEnvironment('dart.vm.product', defaultValue: false);
-  }
+  static bool _alreadyLoaded;
 
   static Future<String> get(String key) async {
-    if (!_alreadyLoaded) {
+    if (_alreadyLoaded == null || !_alreadyLoaded) {
       await _load();
     }
 
@@ -30,6 +27,6 @@ class Env {
   }
 
   static String _getFilename() {
-    return isProduction() ? 'prod' : 'dev';
+    return kReleaseMode ? 'prod' : 'dev';
   }
 }

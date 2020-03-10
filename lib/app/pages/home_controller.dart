@@ -1,5 +1,5 @@
 import 'package:flutterweather/app/models/weather.dart';
-import 'package:flutterweather/app/repositories/weather_repository.dart';
+import 'package:flutterweather/app/services/weather_service.dart';
 import 'package:mobx/mobx.dart';
 
 part 'home_controller.g.dart';
@@ -7,11 +7,11 @@ part 'home_controller.g.dart';
 class HomeController = _HomeControllerBase with _$HomeController;
 
 abstract class _HomeControllerBase with Store {
-  final WeatherRepository weatherRepository;
+  final WeatherService _weatherService;
 
-  _HomeControllerBase(this.weatherRepository);
+  _HomeControllerBase(this._weatherService);
 
   Future<Weather> getCurrentWeather() async {
-    return await weatherRepository.getCurrentWeatherByLatitudeAndLongitude(-18.9113, -48.2622);
+    return await _weatherService.getCurrentWeather();
   }
 }
